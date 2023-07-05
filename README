@@ -1,0 +1,5 @@
+ProjectSpectrum: 
+  GOAL : 
+    - Implement a complete & general spectrum generator for SUSY & non-SUSY models
+    - Calculate some usefull observables such as the DM relic density
+    - Implement usefull method of scan by assuming constraints from observation
