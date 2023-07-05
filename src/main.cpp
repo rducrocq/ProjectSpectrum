@@ -1,4 +1,5 @@
 #include "../inc/Symmetry.h"
+#include "../inc/Field.h"
 #include <iostream>
 #include <vector>
 
@@ -14,5 +15,10 @@ Symmetries sym = {&su3,&su2,&u1} ;
 
 for (auto s : sym) std::cout << s->Getdim() <<std::endl ; 
 
+double vev = 174. ; 
+std::vector<int> repH {0,1,1} ; 
+Scalar Higgs("Higgs", repH, vev) ; 
+
+std::cout << Higgs.Getvev() << std::endl ; 
 return 0 ; 
 }
