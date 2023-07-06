@@ -20,6 +20,7 @@ class Field {
 
 		std::string Getname() const {return name_;}; 	
 		std::vector<double> Getcharge() const {return charge_;}; 
+		Symmetries GetSymmetry() const {return sym_;} ; 
 		double Getvev() const {return vev_;}; 
 
 		void Setname(std::string name) {name_ = name ;}; 
