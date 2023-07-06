@@ -5,8 +5,6 @@
 #include <vector>
 #include "../inc/Symmetry.h"
 
-typedef std::vector<Symmetry*> Symmetries ; 
-
 class Field {
 	protected: 
 		std::string name_ ; 
