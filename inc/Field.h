@@ -17,6 +17,7 @@ class Field {
 		Field(){}; 
 		Field(std::string name, std::vector<double> charge, Symmetries sym) ; 
 		Field(std::string name, std::vector<double> charge, Symmetries sym, double vev) ; 
+		Field(const Field& field) ; 
 		~Field(){} ; 
 
 		std::string Getname() const {return name_;}; 	
@@ -35,6 +36,7 @@ class Scalar: public Field {
 		Scalar(): Field() {} ; 
 		Scalar(std::string name, std::vector<double> charge, Symmetries sym) ; 
 		Scalar(std::string name, std::vector<double> charge, Symmetries sym, double vev) ; 
+		Scalar(const Scalar& phi) ; 
 		~Scalar(){} ;
 
 		virtual double Getspin() const {return 0 ;} ; 
@@ -45,6 +47,7 @@ class Spinor: public Field {
 		Spinor(): Field() {} ; 
 		Spinor(std::string name, std::vector<double> charge, Symmetries sym) ; 
 		Spinor(std::string name, std::vector<double> charge, Symmetries sym, double vev) ; 
+		Spinor(const Spinor& psi) ; 
 		~Spinor(){} ;
 
 		virtual double Getspin() const {return 1./2. ;} ; 
@@ -55,6 +58,7 @@ class Vector: public Field {
 		Vector(): Field() {} ; 
 		Vector(std::string name, std::vector<double> charge, Symmetries sym) ; 
 		Vector(std::string name, std::vector<double> charge, Symmetries sym, double vev) ; 
+		Vector(const Vector& Amu) ; 
 		~Vector(){} ;
 
 		virtual double Getspin() const {return 1 ;} ; 
