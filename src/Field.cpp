@@ -56,7 +56,7 @@ Vector::Vector(std::string name, std::vector<double> charge, Symmetries sym): Fi
 
 Vector::Vector(std::string name, std::vector<double> charge, Symmetries sym, double vev):  Field::Field(name,charge,sym,vev){}; 
 
-Vector::Vector(const Vector& Amu) {
+Vector::Vector(const Vector& Amu) {	
 	name_ = Amu.name_ ;
 	charge_ = Amu.charge_ ; 
 	vev_ = Amu.vev_ ; 
