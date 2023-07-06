@@ -16,8 +16,8 @@ Symmetries sym = {&su3,&su2,&u1} ;
 for (auto s : sym) std::cout << s->Getdim() <<std::endl ; 
 
 double vev = 174. ; 
-std::vector<int> repH {0,1,1} ; 
-Scalar Higgs("Higgs", repH, vev) ; 
+std::vector<double> repH {0,1,1} ; 
+Scalar Higgs("Higgs", repH, sym, vev) ; 
 
 std::cout << Higgs.Getvev() << std::endl ; 
 return 0 ; 
