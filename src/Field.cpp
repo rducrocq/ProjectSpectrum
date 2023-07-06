@@ -1,4 +1,5 @@
 #include "../inc/Field.h"
+#include <iostream>
 
 Field::Field(std::string name, std::vector<double> charge, Symmetries sym) {
 	name_ = name ; 
@@ -11,7 +12,7 @@ Field::Field(std::string name, std::vector<double> charge, Symmetries sym) {
 		}
 }; 
 
-Field::Field(std::string name, std::vector<double> charge, double vev, Symmetries sym) {
+Field::Field(std::string name, std::vector<double> charge, Symmetries sym, double vev) {
 	name_ = name ; 
 	charge_ = charge ; 
 	vev_ = vev ; 
