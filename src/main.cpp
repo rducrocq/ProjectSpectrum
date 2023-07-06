@@ -20,5 +20,8 @@ std::vector<double> repH {0,1,1} ;
 Scalar Higgs("Higgs", repH, sym, vev) ; 
 
 std::cout << Higgs.Getvev() << std::endl ; 
+
+Scalar CopyHiggs(Higgs) ; 
+
 return 0 ; 
 }
