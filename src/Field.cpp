@@ -7,7 +7,7 @@ Field::Field(std::string name, std::vector<double> charge, Symmetries sym) {
 	vev_ = 0 ; 
 	sym_ = sym ; 
 //	assert(charge_.size == sym_.size) ; 
-	if (charge_.size() != sym_.size()) {
+	if (charge_.size() != sym.GetSizeSymmetries()) {
 		std::cerr << "In definition of Field " << name_ << ":\n\tProblem of dimensionality between the charges and the symmetries!" << std::endl ; 
 		}
 }; 
@@ -18,7 +18,7 @@ Field::Field(std::string name, std::vector<double> charge, Symmetries sym, doubl
 	vev_ = vev ; 
 	sym_ = sym ; 
 //	assert(charge_.size == sym_.size) ; 
-	if (charge_.size() != sym_.size()) {
+	if (charge_.size() != sym_.GetSizeSymmetries()) {
 		std::cerr << "In definition of Field " << name_ << ":\n\tProblem of dimensionality between the charges and the symmetries!" << std::endl ; 
 		}
 }; 

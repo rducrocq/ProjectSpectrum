@@ -2,6 +2,7 @@
 #define Symmetry_h
 
 #include <string>
+#include <vector>
 
 class Symmetry {
 	protected: 
@@ -21,6 +22,8 @@ class Symmetry {
 
 		// Mutator
 		void Setn(unsigned int n) ; 
+
+		bool IsEqual(const Symmetry& sym) const ; 
 } ; 
 
 class Symmetry_SU : public Symmetry {
@@ -33,7 +36,7 @@ class Symmetry_SU : public Symmetry {
 		~Symmetry_SU(){} ; 
 
 		// Accessor
-		virtual unsigned int Getdim() const ; 
+		virtual unsigned int Getdim() const override ;  
 } ; 
 
 class Symmetry_U : public Symmetry {
@@ -46,20 +49,31 @@ class Symmetry_U : public Symmetry {
 		~Symmetry_U(){} ; 
 
 		// Accessor
-		virtual unsigned int Getdim() const ; 
+		virtual unsigned int Getdim() const override ; 
 } ; 
-/*
-class u : public Symmetry {
-	public : 
-		// Constructor
-		u(): Symmetry() {} ; 
-		u(unsigned int n) ; 
 
-		// Destructor
-		~u(){} ; 
 
-		// Accessor
-		unsigned int Getdim() const ; 
-}
-*/
+class Symmetries {
+	private:
+		std::vector<Symmetry*> symmetries_ ;
+	public:
+		Symmetries() {}; 
+		Symmetries(std::vector<Symmetry*> symmetries) : symmetries_(symmetries) {};
+		~Symmetries() {} ;
+		void SetSymmetries(std::vector<Symmetry*> symmetries) {symmetries_ = symmetries ;} ; 
+		std::vector<Symmetry*> GetSymmetries() const {return symmetries_ ;} ;  
+		unsigned int GetSizeSymmetries() const {return symmetries_.size() ;} ; 
+		bool AreEqual(const Symmetries& sym) const ; 
+} ; 
+
+bool operator==(const Symmetry&, const Symmetry&) ; 
+bool operator==(const Symmetry_SU&, const Symmetry_SU&) ; 
+bool operator==(const Symmetry_U&, const Symmetry_U&) ; 
+bool operator!=(const Symmetry&, const Symmetry&) ; 
+bool operator!=(const Symmetry_SU&, const Symmetry_SU&) ; 
+bool operator!=(const Symmetry_U&, const Symmetry_U&) ; 
+
+bool operator==(const Symmetries&, const Symmetries&) ; 
+bool operator!=(const Symmetries&, const Symmetries&) ; 
+
 #endif
