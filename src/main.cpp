@@ -1,8 +1,13 @@
 #include "../inc/Symmetry.h"
 #include "../inc/Field.h"
 #include "../inc/Superfield.h"
+#include "../inc/Coupling.h"
 #include <iostream>
 #include <vector>
+
+double RGE_g1(std::vector<double> par){
+	return 1 ; 
+	}
 
 int main(){
 
@@ -18,14 +23,14 @@ Symmetries symc({&su3c,&su2c,&u1c}) ;
 Symmetries symc2({&su3c,&su2c,&u1c,&u2}) ;  
 Symmetries symc3({&su2c,&u1c,&u2}) ;  
 
-if (su2 == su2) std::cout << "su2"  ;
-if (su2 == su2c) std::cout << "su2c"  ;
-if (su2 == su3) std::cout << "su3"  ;
-if (su2 == u2) std::cout << "u2"  ;
+if (su2 == su2) std::cout << "su2"  << std::endl;
+if (su2 == su2c) std::cout << "su2c"  << std::endl;
+if (su2 == su3) std::cout << "su3"  << std::endl;
+if (su2 == u2) std::cout << "u2"  << std::endl;
 
-if (SM == SM) std::cout << "sym"  ;
-if (SM == symc) std::cout << "symc"  ;
-if (SM == symc2) std::cout << "symc2"  ;
+if (SM == SM) std::cout << "sym"  << std::endl;
+if (SM == symc) std::cout << "symc"  << std::endl;
+if (SM == symc2) std::cout << "symc2" << std::endl ;
 if (SM == symc3) std::cout << "symc3" << std::endl  ;
 
 std::vector<double> charge {1/2., 0, 0} ; 
@@ -36,9 +41,14 @@ Vector huvec("huvec", charge, SM) ;
 ChiralSF HU0("Higgs Up 0", &hu0, &hu0_tilde) ;  
 ChiralSF HU02("HU0",charge, SM) ;  
 
-
 VectorSF f0("Higgs Up 0", &huvec, &hu0_tilde) ;  
-Scalar hu02("hu0",charge, symc2) ;
+
+double g1_EW = 18.2 ; 
+GaugeCoupling g1(u1,RGE_g1,g1_EW) ; 
+
+std::vector<Field*> f = {&hu0, &hu0} ; 
+FieldCoupling mphi2(f,RGE_g1, g1_EW) ; 
+
 /*
 for (auto s : sym) std::cout << s->Getdim() <<std::endl ; 
 
