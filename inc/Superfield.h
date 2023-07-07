@@ -34,7 +34,8 @@ class ChiralSF: public Superfield {
 		bool IsChiral() const {return true;} ; 
 		std::vector<double> Getcharge() const {return phi_->Getcharge() ;} ;
 		Symmetries GetSymmetry() const {return phi_->GetSymmetry() ;} ;
-		
+		Scalar* GetScalar() const {return phi_;} ; 
+		Spinor* GetSpinor() const {return psi_;} ; 
 } ;
 
 class VectorSF: public Superfield {
@@ -50,6 +51,7 @@ class VectorSF: public Superfield {
 		bool IsChiral() const {return false;} ; 
 		std::vector<double> Getcharge() const {return vmu_->Getcharge() ;} ;
 		Symmetries GetSymmetry() const {return vmu_->GetSymmetry() ;} ;
-		
+		Vector* GetVector() const {return vmu_;} ; 	
+		Spinor* GetSpinor() const {return psi_;} ; 	
 } ; 
 #endif

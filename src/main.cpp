@@ -2,6 +2,7 @@
 #include "../inc/Field.h"
 #include "../inc/Superfield.h"
 #include "../inc/Coupling.h"
+#include "../inc/Model.h"
 #include <iostream>
 #include <vector>
 
@@ -43,7 +44,7 @@ ChiralSF HU02("HU0",charge, SM) ;
 
 VectorSF f0("Higgs Up 0", &huvec, &hu0_tilde) ;  
 
-double g1_EW = 18.2 ; 
+double g1_EW { 18.2 } ; 
 GaugeCoupling g1(u1,RGE_g1,g1_EW) ; 
 
 std::vector<Field*> f = {&hu0, &hu0} ; 
