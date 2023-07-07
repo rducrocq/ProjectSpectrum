@@ -42,3 +42,28 @@ bool SUSYModel::SolveRGE() {
 	/* Implementation of SolveRGE... */
 	return true ; 
 	} ;  		
+
+ClassicModel::ClassicModel(std::string name, Symmetries& sym	, std::vector<GaugeCoupling*>& g_cpl
+							, std::vector<Scalar*>& phis
+							, std::vector<Spinor*>& psis
+							, std::vector<Vector*>& Amus
+							, std::vector<FieldCoupling*>& Fcpl) : Model(name, sym, g_cpl) {
+	phis_ = &phis ; 
+	psis_ = &psis ;
+	Amus_ = &Amus ; 
+	Fcpl_ = &Fcpl ; 
+	(*cpl_).insert((*cpl_).end(), (*Fcpl_).begin(), (*Fcpl_).end());
+	} ; 
+
+std::vector<Field*>* ClassicModel::GetFields() const {
+	std::vector<Field*>* F = nullptr ;
+	(*F).insert((*F).end(), (*phis_).begin(), (*phis_).end());
+	(*F).insert((*F).end(), (*psis_).begin(), (*psis_).end());
+	(*F).insert((*F).end(), (*Amus_).begin(), (*Amus_).end());
+	return F ; 
+	};  		
+
+bool ClassicModel::SolveRGE() {
+	/* Implementation of SolveRGE... */
+	return true ; 
+	} ;  		
