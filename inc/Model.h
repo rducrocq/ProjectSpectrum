@@ -46,26 +46,27 @@ class SUSYModel: public Model {
 		virtual std::vector<Superfield*>* GetSuperFields() const ; 		
 		virtual bool SolveRGE() ; 		
 } ; 
-/*
+
 class ClassicModel: public Model {
 	private:
 		std::vector<Scalar*>* phis_ ; 
-		std::vector<Spinor*>* psis_ ; 
-		std::vector<Vector*>* Amus_ ; 
-		std::vector<FieldCoupling*>* cpl_ ; 
-	public: 
+		std::vector<Spinor*>* psis_ ;
+ 		std::vector<Vector*>* Amus_ ;
+		std::vector<FieldCoupling*>* Fcpl_ ; 
+	public:
 		ClassicModel() : Model() {} ; 
 		ClassicModel(std::string name_, Symmetries& sym	, std::vector<GaugeCoupling*>& g_cpl
-								, std::vector<Scalar*>* phis
-								, std::vector<Vector*>* Amus
-								, std::vector<Spinor*>* psis
-								, std::vector<FieldCoupling*>* cpl) ; 
+								, std::vector<Scalar*>& phis
+								, std::vector<Spinor*>& psis
+								, std::vector<Vector*>& Amus
+								, std::vector<FieldCoupling*>& Fcpl) ; 
 		~ClassicModel() {} ; 
 
-		virtual void SetCoupling(std::vector<Coupling*>& cpl) {cpl_ = &cpl; } ; 
+		void SetFieldCoupling(std::vector<FieldCoupling*>& Fcpl) {Fcpl_ = &Fcpl; } ; 
+		std::vector<FieldCoupling*>* GetFieldCoupling() const {return Fcpl_;} ; 
 		virtual std::vector<Coupling*>* GetCoupling() const {return cpl_;} ; 
-		virtual std::vector<Field*>* GetFields() const ; 			
-		virtual bool SolveRGE() ; 
+		virtual std::vector<Field*>* GetFields() const ; 		
+		virtual bool SolveRGE() ; 		
 } ; 
-*/
+
 #endif
