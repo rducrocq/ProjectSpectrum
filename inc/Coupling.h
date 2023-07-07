@@ -5,6 +5,7 @@
 #include <functional>
 #include "../inc/Symmetry.h"
 #include "../inc/Field.h"
+#include "../inc/Superfield.h"
 
 typedef std::function<double(std::vector<double>)> RGE ; 
 
@@ -24,7 +25,7 @@ class Coupling {
 							, value_EW_(value_EW)
 							, value_SUSY_(value_SUSY)
 							, value_GUT_(value_GUT) {} ; 
-		~Coupling(){} ; 
+		virtual ~Coupling(){} ; 
 
 		void SetRGE(RGE rge) {rge_ = rge; } ;
 		void SetValue_EW(double value_EW) {value_EW_ = value_EW; } ;
@@ -46,7 +47,7 @@ class GaugeCoupling: public Coupling {
 		GaugeCoupling() : Coupling() {} ;
 		GaugeCoupling(Symmetry& sym, RGE rge, double value_EW) ; 
 		GaugeCoupling(Symmetry& sym, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
-		~GaugeCoupling() {} ;
+		virtual ~GaugeCoupling() {} ;
 
 		Symmetry* GetSymmetry() const {return sym_;} ; 
 		void SetSymmetry(Symmetry* sym) {sym_ = sym;} ; 
@@ -59,10 +60,23 @@ class FieldCoupling: public Coupling {
 		FieldCoupling() {} ; 
 		FieldCoupling(std::vector<Field*>& fields, RGE rge, double value_EW) ; 
 		FieldCoupling(std::vector<Field*>& fields, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
-		~FieldCoupling() {} ;
+		virtual ~FieldCoupling() {} ;
 
 		std::vector<Field*>* GetFields() const {return fields_;} ; 
 		void SetFields(std::vector<Field*>& fields) {fields_ = &fields;} ; 
+} ; 
+
+class SFCoupling: public Coupling {
+	private:
+		std::vector<Superfield*>* superfields_ ; 
+	public:
+		SFCoupling() {} ; 
+		SFCoupling(std::vector<Superfield*>& superfields, RGE rge, double value_EW) ; 
+		SFCoupling(std::vector<Superfield*>& superfields, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
+		virtual ~SFCoupling() {} ;
+
+		std::vector<Superfield*>* GetSuperFields() const {return superfields_;} ; 
+		void SetSuperFields(std::vector<Superfield*>& superfields) {superfields_ = &superfields;} ; 
 } ; 
 
 #endif
