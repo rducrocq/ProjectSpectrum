@@ -3,6 +3,7 @@
 #include <vector>
 #include "typeinfo"
 #include <iostream>
+#include <algorithm>
 
 Symmetry::Symmetry(unsigned int n): n_(n) {} ; 
 
@@ -31,14 +32,10 @@ bool operator!=(const Symmetry_SU& a, const Symmetry_SU& b) {return !(a.IsEqual(
 bool operator!=(const Symmetry_U& a, const Symmetry_U& b) {return !(a.IsEqual(b)) ;} ;
 
 bool Symmetries::AreEqual(const Symmetries& s) const {
-	if (symmetries_.size() != s.GetSizeSymmetries() ) return false ; 
 	std::vector<Symmetry*> sym = s.GetSymmetries() ; 
-	for (int i = 0 ; i < symmetries_.size() ; i++) 
-		if ( !(symmetries_[i]->IsEqual(*sym[i])) ) {
-			return false ; 
-		}
-	return true ; 
+	return std::equal(sym.begin(), sym.end(), symmetries_.begin(), symmetries_.end()) ; 
 	} ; 
 
 bool operator==(const Symmetries& a, const Symmetries& b) {return a.AreEqual(b) ;} ;
 bool operator!=(const Symmetries& a, const Symmetries& b) {return !(a.AreEqual(b)) ;}  ;
+
