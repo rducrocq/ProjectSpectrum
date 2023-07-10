@@ -2,10 +2,11 @@
 #include <iostream>
 
 Model::Model(std::string name, Symmetries& sym, std::vector<GaugeCoupling*>& g_cpl) : name_(name), sym_(&sym), g_cpl_(&g_cpl) {
+	cpl_ = new std::vector<Coupling*> {} ; 
 	if ( sym.GetSizeSymmetries() != (*g_cpl_).size() ) {
 		std::cout << "In Model: Problem of dimensionality between Symmetries & GaugeCoupling!" << std::endl ; 
 		}
-	(*cpl_).insert((*cpl_).end(), (*g_cpl_).begin(), (*g_cpl_).end());
+	cpl_->insert(cpl_->end(), g_cpl_->begin(), g_cpl_->end());
 	} ; 
 
 SUSYModel::SUSYModel(std::string name, Symmetries& sym	, std::vector<GaugeCoupling*>& g_cpl
@@ -15,30 +16,29 @@ SUSYModel::SUSYModel(std::string name, Symmetries& sym	, std::vector<GaugeCoupli
 	Phis_ = &Phis ; 
 	Vs_ = &Vs ; 
 	SFcpl_ = &SFcpl ; 
-	(*cpl_).insert((*cpl_).end(), (*SFcpl_).begin(), (*SFcpl_).end());
-	} ; 
+	cpl_->insert(cpl_->end(), SFcpl_->begin(), SFcpl_->end());
 
-std::vector<Field*>* SUSYModel::GetFields() const {
-	std::vector<Field*>* F = nullptr ;
+	F_ = new std::vector<Field*> {} ;
 	for (auto chiral : *Phis_) {
-		(*F).push_back(chiral->GetScalar()) ; 
-		(*F).push_back(chiral->GetSpinor()) ; 
+		F_->push_back(chiral->GetScalar()) ; 
+		F_->push_back(chiral->GetSpinor()) ; 
 		}
 	for (auto vector : *Vs_) {
-		(*F).push_back(vector->GetVector()) ; 
-		(*F).push_back(vector->GetSpinor()) ; 
+		F_->push_back(vector->GetVector()) ; 
+		F_->push_back(vector->GetSpinor()) ; 
 		}
-	return F ; 
-	};  		
 
-std::vector<Superfield*>* SUSYModel::GetSuperFields() const {
-	std::vector<Superfield*>* SF = nullptr ; 
-	(*SF).insert((*SF).end(), (*Phis_).begin(),  (*Phis_).end()) ;
-	(*SF).insert((*SF).end(), (*Vs_).begin(),  (*Vs_).end()) ;
-	return SF ;  
-	}; 		
+	SF_ = new std::vector<Superfield*> {} ; 
+	SF_->insert(SF_->end(), Phis_->begin(),  Phis_->end()) ;
+	SF_->insert(SF_->end(), Vs_->begin(),  Vs_->end()) ;
 
-bool SUSYModel::SolveRGE() {
+	} ; 
+
+std::vector<Field*>* SUSYModel::GetFields() const {return F_ ;};  		
+
+std::vector<Superfield*>* SUSYModel::GetSuperFields() const {return SF_ ;}; 		
+
+bool SUSYModel::SolveRGE() const {
 	/* Implementation of SolveRGE... */
 	return true ; 
 	} ;  		
@@ -52,18 +52,18 @@ ClassicModel::ClassicModel(std::string name, Symmetries& sym	, std::vector<Gauge
 	psis_ = &psis ;
 	Amus_ = &Amus ; 
 	Fcpl_ = &Fcpl ; 
-	(*cpl_).insert((*cpl_).end(), (*Fcpl_).begin(), (*Fcpl_).end());
+	cpl_->insert(cpl_->end(), Fcpl_->begin(), Fcpl_->end());
+
+	F_ = new std::vector<Field*> {} ;
+	F_->insert(F_->end(), phis_->begin(), phis_->end());
+	F_->insert(F_->end(), psis_->begin(), psis_->end());
+	F_->insert(F_->end(), Amus_->begin(), Amus_->end());
+
 	} ; 
 
-std::vector<Field*>* ClassicModel::GetFields() const {
-	std::vector<Field*>* F = nullptr ;
-	(*F).insert((*F).end(), (*phis_).begin(), (*phis_).end());
-	(*F).insert((*F).end(), (*psis_).begin(), (*psis_).end());
-	(*F).insert((*F).end(), (*Amus_).begin(), (*Amus_).end());
-	return F ; 
-	};  		
+std::vector<Field*>* ClassicModel::GetFields() const {return F_ ; };  		
 
-bool ClassicModel::SolveRGE() {
+bool ClassicModel::SolveRGE() const {
 	/* Implementation of SolveRGE... */
 	return true ; 
 	} ;  		
