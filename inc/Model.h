@@ -16,7 +16,7 @@ class Model {
 	public: 
 		Model() {} ; 
 		Model(std::string name, Symmetries& sym, std::vector<GaugeCoupling*>& g_cpl) ; 
-		virtual ~Model() {} ;
+		virtual ~Model() {delete cpl_ ; cpl_ = 0 ;} ;
  
 		std::vector<GaugeCoupling*>& GetGaugeCoupling() const {return *g_cpl_;} ; 
 
@@ -31,20 +31,23 @@ class SUSYModel: public Model {
 		std::vector<ChiralSF*>* Phis_ ; 
 		std::vector<VectorSF*>* Vs_ ; 
 		std::vector<SFCoupling*>* SFcpl_ ; 
+		std::vector<Superfield*>* SF_ ; 
+		std::vector<Field*>* F_ ; 
+ 
 	public:
 		SUSYModel() : Model() {} ; 
 		SUSYModel(std::string name_, Symmetries& sym	, std::vector<GaugeCoupling*>& g_cpl
 								, std::vector<ChiralSF*>& Phis
 								, std::vector<VectorSF*>& Vs
 								, std::vector<SFCoupling*>& SFcpl) ; 
-		~SUSYModel() {} ; 
+		~SUSYModel() {delete SF_ ; SF_ = 0 ; delete F_; F_ = 0 ; } ; 
 
 		void SetSFCoupling(std::vector<SFCoupling*>& SFcpl) {SFcpl_ = &SFcpl; } ; 
 		std::vector<SFCoupling*>* GetSFCoupling() const {return SFcpl_;} ; 
 		virtual std::vector<Coupling*>* GetCoupling() const {return cpl_;} ; 
 		virtual std::vector<Field*>* GetFields() const ; 		
 		virtual std::vector<Superfield*>* GetSuperFields() const ; 		
-		virtual bool SolveRGE() ; 		
+		virtual bool SolveRGE() const ; 		
 } ; 
 
 class ClassicModel: public Model {
@@ -53,6 +56,7 @@ class ClassicModel: public Model {
 		std::vector<Spinor*>* psis_ ;
  		std::vector<Vector*>* Amus_ ;
 		std::vector<FieldCoupling*>* Fcpl_ ; 
+		std::vector<Field*>* F_ ; 
 	public:
 		ClassicModel() : Model() {} ; 
 		ClassicModel(std::string name_, Symmetries& sym	, std::vector<GaugeCoupling*>& g_cpl
@@ -60,13 +64,13 @@ class ClassicModel: public Model {
 								, std::vector<Spinor*>& psis
 								, std::vector<Vector*>& Amus
 								, std::vector<FieldCoupling*>& Fcpl) ; 
-		~ClassicModel() {} ; 
+		~ClassicModel() {delete F_ ; F_ = 0 ;} ; 
 
 		void SetFieldCoupling(std::vector<FieldCoupling*>& Fcpl) {Fcpl_ = &Fcpl; } ; 
 		std::vector<FieldCoupling*>* GetFieldCoupling() const {return Fcpl_;} ; 
 		virtual std::vector<Coupling*>* GetCoupling() const {return cpl_;} ; 
 		virtual std::vector<Field*>* GetFields() const ; 		
-		virtual bool SolveRGE() ; 		
+		virtual bool SolveRGE() const ; 		
 } ; 
 
 #endif
