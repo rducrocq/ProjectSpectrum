@@ -16,7 +16,7 @@ class Field {
 		Field(std::string name, std::vector<double> charge, Symmetries sym) ; 
 		Field(std::string name, std::vector<double> charge, Symmetries sym, double vev) ; 
 		Field(const Field& field) ; 
-		~Field(){} ; 
+		virtual ~Field(){} ; 
 
 		std::string Getname() const {return name_;}; 	
 		std::vector<double> Getcharge() const {return charge_;}; 

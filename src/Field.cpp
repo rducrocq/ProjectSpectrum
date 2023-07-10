@@ -23,7 +23,7 @@ Field::Field(std::string name, std::vector<double> charge, Symmetries sym, doubl
 		}
 }; 
 
-Field::Field(const Field& field) {
+Field::Field(const Field& field) : Field() {
 	name_ = field.name_ ;
 	charge_ = field.charge_ ; 
 	vev_ = field.vev_ ; 
@@ -34,7 +34,7 @@ Scalar::Scalar(std::string name, std::vector<double> charge, Symmetries sym): Fi
 
 Scalar::Scalar(std::string name, std::vector<double> charge, Symmetries sym, double vev):  Field::Field(name,charge,sym,vev){}; 
 
-Scalar::Scalar(const Scalar& phi) {
+Scalar::Scalar(const Scalar& phi) : Scalar() {
 	name_ = phi.name_ ;
 	charge_ = phi.charge_ ; 
 	vev_ = phi.vev_ ; 
@@ -45,7 +45,7 @@ Spinor::Spinor(std::string name, std::vector<double> charge, Symmetries sym): Fi
 
 Spinor::Spinor(std::string name, std::vector<double> charge, Symmetries sym, double vev):  Field::Field(name,charge,sym,vev){}; 
 
-Spinor::Spinor(const Spinor& psi) {
+Spinor::Spinor(const Spinor& psi) : Spinor() {
 	name_ = psi.name_ ;
 	charge_ = psi.charge_ ; 
 	vev_ = psi.vev_ ; 
@@ -56,7 +56,7 @@ Vector::Vector(std::string name, std::vector<double> charge, Symmetries sym): Fi
 
 Vector::Vector(std::string name, std::vector<double> charge, Symmetries sym, double vev):  Field::Field(name,charge,sym,vev){}; 
 
-Vector::Vector(const Vector& Amu) {	
+Vector::Vector(const Vector& Amu) : Vector() {	
 	name_ = Amu.name_ ;
 	charge_ = Amu.charge_ ; 
 	vev_ = Amu.vev_ ; 
