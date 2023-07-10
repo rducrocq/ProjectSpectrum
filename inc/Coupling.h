@@ -2,6 +2,7 @@
 #define Coupling_h
 
 #include <string>
+#include <iostream>
 #include <functional>
 #include "../inc/Symmetry.h"
 #include "../inc/Field.h"
@@ -10,17 +11,17 @@
 typedef std::function<double(std::vector<double>)> RGE ; 
 
 class Coupling {
-	private:
-		double value_EW_ ; 
-		double value_GUT_ ; 
-		double value_SUSY_ ; 
+	protected:
+		double value_EW_ = 0 ; 
+		double value_GUT_ = 0  ; 
+		double value_SUSY_ = 0  ; 
 		RGE rge_ ; 
 	public:
 		Coupling(){} ; 
 		Coupling(RGE rge, double value_EW): rge_(rge)
 							, value_EW_(value_EW)
 							, value_SUSY_(0)
-							, value_GUT_(0) {} ; 
+							, value_GUT_(0) {std::cout << "In Coupling EW : " << value_SUSY_ << std::endl ; } ; 
 		Coupling(RGE rge, double value_EW, double value_SUSY, double value_GUT): rge_(rge)
 							, value_EW_(value_EW)
 							, value_SUSY_(value_SUSY)
