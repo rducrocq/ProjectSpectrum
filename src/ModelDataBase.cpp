@@ -2,7 +2,7 @@
 #include "../inc/Model.h"
 #include "../models/RGE_MSSM.h"
 
-SUSYModel ModelDataBase::LoadMSSM() {
+SUSYModel* ModelDataBase::LoadMSSM() {
 	// Define Symmetries of the MSSM 
 	std::vector<Symmetry*> sym ; 
 	Symmetry_SU su3(3) ; 
@@ -28,17 +28,15 @@ SUSYModel ModelDataBase::LoadMSSM() {
 	// Define Vector superfields
 	// problem with definition of the color charge... -> change to rep ? 
 	std::vector<VectorSF*> vector_SF ; 
-/*
 	VectorSF V3("gluon",{8,1,1},SM) ; 
 	vector_SF.push_back(&V3) ; 
 	VectorSF V2("W",{1,2,1},SM) ; 
 	vector_SF.push_back(&V2) ; 
 	VectorSF V1("B",{1,1,1},SM) ; 
 	vector_SF.push_back(&V1) ; 
-*/	
+
 	// Define Chiral superfields
 	std::vector<ChiralSF*> chiral_SF ; 
-/*
 	ChiralSF HU("Higgs Up", {1,2,2},SM) ; 
 	chiral_SF.push_back(&HU) ;  
 	ChiralSF HD("Higgs Down", {1,2,2},SM) ;  
@@ -53,17 +51,22 @@ SUSYModel ModelDataBase::LoadMSSM() {
 	chiral_SF.push_back(&L) ; 
 	ChiralSF E("Right handed lepton", {3,2,2},SM) ;  
 	chiral_SF.push_back(&E) ; 
-*/	
+
 	// Define SF couplings
 	// Need to add specific conditions for potential minimisation
 	std::vector<SFCoupling*> couplings ; 
-/*
-	double Mu_EW {1} ; 
+	double Mu_EW {32.23} ; 
 	std::vector<Superfield*> sf_Mu {&HU,&HD} ; 
 	SFCoupling Mu(sf_Mu, RGE_mu, Mu_EW) ; 
 	couplings.push_back(&Mu) ; 
-*/	
+	std::vector<SFCoupling*>* couplings_ptr = &couplings ; 
+
+	std::cout << "In DataBase : " << couplings[0]->GetValue_EW() << " " << couplings[0] << std::endl ; 
 	// Definition of the model
-	SUSYModel MSSM("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ; 
+//	SUSYModel MSSM("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ; 
+	SUSYModel* MSSM = new SUSYModel("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ;
+	auto all_sfcpl = MSSM->GetSFCoupling() ; 
+	std::cout << "In DataBase : " << (*all_sfcpl)[0]->GetValue_EW()  << std::endl ; 
+	std::cout << "In DataBase ptr : " << (*all_sfcpl)[0]  << std::endl ; 
 	return MSSM ; 
 	} ; 

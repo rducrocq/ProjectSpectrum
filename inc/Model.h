@@ -42,7 +42,7 @@ class SUSYModel: public Model {
 								, std::vector<SFCoupling*>& SFcpl) ; 
 		~SUSYModel() {delete SF_ ; SF_ = 0 ; delete F_; F_ = 0 ; } ; 
 
-		void SetSFCoupling(std::vector<SFCoupling*>& SFcpl) {SFcpl_ = &SFcpl; } ; 
+		void SetSFCoupling(std::vector<SFCoupling*>* SFcpl) {SFcpl_ = SFcpl; } ; 
 		std::vector<SFCoupling*>* GetSFCoupling() const {return SFcpl_;} ; 
 		virtual std::vector<Coupling*>* GetCoupling() const {return cpl_;} ; 
 		virtual std::vector<Field*>* GetFields() const ; 		

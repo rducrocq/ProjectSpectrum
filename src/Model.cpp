@@ -16,6 +16,9 @@ SUSYModel::SUSYModel(std::string name, Symmetries& sym	, std::vector<GaugeCoupli
 	Phis_ = &Phis ; 
 	Vs_ = &Vs ; 
 	SFcpl_ = &SFcpl ; 
+	for (auto a : (*SFcpl_)){
+		std::cout << "in constructor : " << a->GetValue_EW() << std::endl ; 
+		}
 	cpl_->insert(cpl_->end(), SFcpl_->begin(), SFcpl_->end());
 
 	F_ = new std::vector<Field*> {} ;

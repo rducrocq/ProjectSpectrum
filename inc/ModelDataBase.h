@@ -6,7 +6,7 @@ class ModelDataBase {
 	public:
 		ModelDataBase() {} ; 
 		~ModelDataBase() {} ; 
-		SUSYModel LoadMSSM() ; 
+		SUSYModel* LoadMSSM() ; 
 } ; 
 
 #endif

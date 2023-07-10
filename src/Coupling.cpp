@@ -1,4 +1,5 @@
 #include "../inc/Coupling.h"
+#include <iostream>
 
 GaugeCoupling::GaugeCoupling(Symmetry& sym, RGE rge, double value_EW) : Coupling(rge,value_EW) {
 	sym_ = &sym ;
@@ -19,6 +20,7 @@ FieldCoupling::FieldCoupling(std::vector<Field*>& fields, RGE rge, double value_
 
 SFCoupling::SFCoupling(std::vector<Superfield*>& superfields, RGE rge, double value_EW): Coupling(rge,value_EW) {
 	superfields_ = &superfields ;
+	std::cout << "In Coupling CPP EW : " << value_EW_ <<  " " << value_EW << std::endl ;
 	} ;  
 
 SFCoupling::SFCoupling(std::vector<Superfield*>& superfields, RGE rge, double value_EW, double value_SUSY, double value_GUT):
