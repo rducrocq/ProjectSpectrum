@@ -12,20 +12,20 @@ typedef std::function<double(std::vector<double>)> RGE ;
 
 class Coupling {
 	protected:
-		double value_EW_ = 0 ; 
-		double value_GUT_ = 0  ; 
-		double value_SUSY_ = 0  ; 
-		RGE rge_ ; 
+		RGE rge_ ;
+		double value_EW_  ; 
+		double value_GUT_  ; 
+		double value_SUSY_  ;  
 	public:
 		Coupling(){} ; 
 		Coupling(RGE rge, double value_EW): rge_(rge)
 							, value_EW_(value_EW)
-							, value_SUSY_(0)
-							, value_GUT_(0) {std::cout << "In Coupling EW : " << value_SUSY_ << std::endl ; } ; 
-		Coupling(RGE rge, double value_EW, double value_SUSY, double value_GUT): rge_(rge)
+							, value_GUT_(0)
+							, value_SUSY_(0) {std::cout << "In Coupling EW : " << value_SUSY_ << std::endl ; } ; 
+		Coupling(RGE rge, double value_EW, double value_GUT, double value_SUSY): rge_(rge)
 							, value_EW_(value_EW)
-							, value_SUSY_(value_SUSY)
-							, value_GUT_(value_GUT) {} ; 
+							, value_GUT_(value_GUT)
+							, value_SUSY_(value_SUSY) {} ; 
 		virtual ~Coupling(){} ; 
 
 		void SetRGE(RGE rge) {rge_ = rge; } ;
