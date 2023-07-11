@@ -40,7 +40,14 @@ class SUSYModel: public Model {
 								, std::vector<ChiralSF*>& Phis
 								, std::vector<VectorSF*>& Vs
 								, std::vector<SFCoupling*>& SFcpl) ; 
-		~SUSYModel() {delete SF_ ; SF_ = 0 ; delete F_; F_ = 0 ; } ; 
+		~SUSYModel() {
+			for (auto sfcpl : *SFcpl_){
+				delete sfcpl ; sfcpl = 0 ; 
+			}
+			delete SFcpl_ ; SFcpl_ = 0 ; 
+			delete SF_ ; SF_ = 0 ; 
+			delete F_; F_ = 0 ; 
+			} ; 
 
 		void SetSFCoupling(std::vector<SFCoupling*>* SFcpl) {SFcpl_ = SFcpl; } ; 
 		std::vector<SFCoupling*>* GetSFCoupling() const {return SFcpl_;} ; 

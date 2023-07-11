@@ -26,6 +26,7 @@ class Coupling {
 							, value_EW_(value_EW)
 							, value_GUT_(value_GUT)
 							, value_SUSY_(value_SUSY) {} ; 
+		Coupling(const Coupling& cpl) ; 
 		virtual ~Coupling(){} ; 
 
 		void SetRGE(RGE rge) {rge_ = rge; } ;
@@ -48,6 +49,7 @@ class GaugeCoupling: public Coupling {
 		GaugeCoupling() : Coupling() {} ;
 		GaugeCoupling(Symmetry& sym, RGE rge, double value_EW) ; 
 		GaugeCoupling(Symmetry& sym, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
+		GaugeCoupling(const GaugeCoupling& g_cpl) ;
 		virtual ~GaugeCoupling() {} ;
 
 		Symmetry* GetSymmetry() const {return sym_;} ; 
@@ -61,6 +63,7 @@ class FieldCoupling: public Coupling {
 		FieldCoupling() {} ; 
 		FieldCoupling(std::vector<Field*>& fields, RGE rge, double value_EW) ; 
 		FieldCoupling(std::vector<Field*>& fields, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
+		FieldCoupling(const FieldCoupling& f_cpl) ; 
 		virtual ~FieldCoupling() {} ;
 
 		std::vector<Field*>* GetFields() const {return fields_;} ; 
@@ -74,6 +77,7 @@ class SFCoupling: public Coupling {
 		SFCoupling() {} ; 
 		SFCoupling(std::vector<Superfield*>& superfields, RGE rge, double value_EW) ; 
 		SFCoupling(std::vector<Superfield*>& superfields, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
+		SFCoupling(const SFCoupling& sf_cpl) ; 
 		virtual ~SFCoupling() {} ;
 
 		std::vector<Superfield*>* GetSuperFields() const {return superfields_;} ; 

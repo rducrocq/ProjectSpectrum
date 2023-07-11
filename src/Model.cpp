@@ -15,7 +15,12 @@ SUSYModel::SUSYModel(std::string name, Symmetries& sym	, std::vector<GaugeCoupli
 							, std::vector<SFCoupling*>& SFcpl) : Model(name, sym, g_cpl) {
 	Phis_ = &Phis ; 
 	Vs_ = &Vs ; 
-	SFcpl_ = &SFcpl ; 
+	SFcpl_ = new std::vector<SFCoupling*> {} ; 
+	for (auto sfcpl : SFcpl){ 
+		SFcpl_->push_back(new SFCoupling(*sfcpl)) ; 
+	}
+	
+//	SFcpl_ = &SFcpl ; 
 	for (auto a : (*SFcpl_)){
 		std::cout << "in constructor : " << a->GetValue_EW() << std::endl ; 
 		}
