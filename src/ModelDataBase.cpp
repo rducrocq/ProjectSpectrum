@@ -61,12 +61,12 @@ SUSYModel* ModelDataBase::LoadMSSM() {
 	couplings.push_back(&Mu) ; 
 	std::vector<SFCoupling*>* couplings_ptr = &couplings ; 
 
-	std::cout << "In DataBase : " << couplings[0]->GetValue_EW() << " " << couplings[0] << std::endl ; 
+//	std::cout << "In DataBase : " << couplings[0]->GetValue_EW() << " " << couplings[0] << std::endl ; 
 	// Definition of the model
 //	SUSYModel MSSM("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ; 
 	SUSYModel* MSSM = new SUSYModel("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ;
 	auto all_sfcpl = MSSM->GetSFCoupling() ; 
-	std::cout << "In DataBase : " << (*all_sfcpl)[0]->GetValue_EW()  << std::endl ; 
-	std::cout << "In DataBase ptr : " << (*all_sfcpl)[0]  << std::endl ; 
+//	std::cout << "In DataBase : " << (*all_sfcpl)[0]->GetValue_EW()  << std::endl ; 
+//	std::cout << "In DataBase ptr : " << (*all_sfcpl)[0]  << std::endl ; 
 	return MSSM ; 
 	} ; 

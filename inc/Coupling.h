@@ -21,7 +21,7 @@ class Coupling {
 		Coupling(RGE rge, double value_EW): rge_(rge)
 							, value_EW_(value_EW)
 							, value_GUT_(0)
-							, value_SUSY_(0) {std::cout << "In Coupling EW : " << value_SUSY_ << std::endl ; } ; 
+							, value_SUSY_(0) {} ; //std::cout << "In Coupling EW : " << value_SUSY_ << std::endl ; } ; 
 		Coupling(RGE rge, double value_EW, double value_GUT, double value_SUSY): rge_(rge)
 							, value_EW_(value_EW)
 							, value_GUT_(value_GUT)
@@ -81,6 +81,7 @@ class SFCoupling: public Coupling {
 		virtual ~SFCoupling() {} ;
 
 		std::vector<Superfield*>* GetSuperFields() const {return superfields_;} ; 
+		// Use of dynamical def and copy constructor ?
 		void SetSuperFields(std::vector<Superfield*>& superfields) {superfields_ = &superfields;} ; 
 } ; 
 

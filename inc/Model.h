@@ -19,6 +19,7 @@ class Model {
 		virtual ~Model() {delete cpl_ ; cpl_ = 0 ;} ;
  
 		std::vector<GaugeCoupling*>& GetGaugeCoupling() const {return *g_cpl_;} ; 
+		Symmetries* GetSymmetries() const {return sym_ ;} ; 
 
 //		virtual void SetCoupling(std::vector<Coupling*>& cpl) = 0 ; 
 		virtual std::vector<Coupling*>* GetCoupling() const = 0 ; 

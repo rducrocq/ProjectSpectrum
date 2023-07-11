@@ -38,7 +38,7 @@ SFCoupling::SFCoupling(const SFCoupling& sf_cpl) : Coupling(sf_cpl) {
 
 SFCoupling::SFCoupling(std::vector<Superfield*>& superfields, RGE rge, double value_EW) : Coupling(rge,value_EW) {
 	superfields_ = &superfields ;
-	std::cout << "In Coupling CPP EW : " << value_EW_ <<  " " << value_EW << std::endl ;
+//	std::cout << "In Coupling CPP EW : " << value_EW_ <<  " " << value_EW << std::endl ;
 	} ;  
 
 SFCoupling::SFCoupling(std::vector<Superfield*>& superfields, RGE rge, double value_EW, double value_SUSY, double value_GUT) : Coupling(rge, value_EW, value_SUSY, value_GUT) {
