@@ -16,7 +16,8 @@
                 "src/ModelDataBase.cpp",
                 "models/RGE_MSSM.cpp",
                 "-o",
-                "output"       // le nom du fichier de sortie
+                "output",       // le nom du fichier de sortie
+                "-std=c++14"
             ],
             "group": {
                 "kind": "build",

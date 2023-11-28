@@ -2,7 +2,7 @@
 #include "../inc/Model.h"
 #include "../models/RGE_MSSM.h"
 
-SUSYModel* ModelDataBase::LoadMSSM() {
+std::shared_ptr<SUSYModel> ModelDataBase::LoadMSSM() {
 	// Define Symmetries of the MSSM 
 	std::vector<Symmetry*> sym ; 
 	Symmetry_SU su3(3) ; 
@@ -64,7 +64,8 @@ SUSYModel* ModelDataBase::LoadMSSM() {
 	std::cout << "In DataBase : " << couplings[0]->GetValue_EW() << " " << couplings[0] << std::endl ; 
 	// Definition of the model
 //	SUSYModel MSSM("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ; 
-	SUSYModel* MSSM = new SUSYModel("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ;
+//	SUSYModel* MSSM = new SUSYModel("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ;
+	std::shared_ptr<SUSYModel> MSSM = std::make_shared<SUSYModel>("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings);
 	auto all_sfcpl = MSSM->GetSFCoupling() ; 
 	std::cout << "In DataBase : " << (*all_sfcpl)[0]->GetValue_EW()  << std::endl ; 
 	std::cout << "In DataBase ptr : " << (*all_sfcpl)[0]  << std::endl ; 

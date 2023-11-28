@@ -14,9 +14,7 @@ std::cout << "BEGINNING OF PROGRAM" << std::endl ;
 
 ModelDataBase mdb ;
 
-SUSYModel* MSSM = mdb.LoadMSSM() ; 
-
-
+std::shared_ptr<SUSYModel> MSSM = mdb.LoadMSSM() ; 
 
 // Test of SFCoupling
 std::vector<SFCoupling*>* SFcpl = MSSM->GetSFCoupling() ; 
@@ -41,8 +39,6 @@ std::vector<Superfield*>* SF = MSSM->GetSuperFields() ;
 
 // Test of SolveRGE()
 std::cout << MSSM->SolveRGE() << std::endl ; 
-
-delete MSSM ; MSSM = 0 ; 
 
 std::cout << "END OF PROGRAM" << std::endl ;
 
