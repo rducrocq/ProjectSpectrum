@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",  // ou le compilateur C++ de votre choix
+            "args": [
+                "-g",          // ajoute des informations de débogage
+                "src/main.cpp",    // votre fichier principal
+                "src/Coupling.cpp",   // vos autres fichiers source
+                "src/Field.cpp",
+                "src/Superfield.cpp",
+                "src/Symmetry.cpp",
+                "src/Model.cpp",
+                "src/ModelDataBase.cpp",
+                "models/RGE_MSSM.cpp",
+                "-o",
+                "output"       // le nom du fichier de sortie
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
