@@ -5,3 +5,9 @@ ProjectSpectrum:
     - Implement usefull methods of scan by assuming constraints from observation :
         -- MCMC Algorithm
         -- Machine Learning Scan (MLS) method (see https://arxiv.org/abs/1708.06615)
+
+Note for myself : 
+  - Compile C++ code with VS Code : 
+    -- Add cpp files in tasks.json (if not present, F1 and "Tasks : Configure tasks")
+    -- Compile code : Ctrl + MAJ + B
+    -- Execute the program on terminal
