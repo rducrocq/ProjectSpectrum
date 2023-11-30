@@ -1,16 +1,17 @@
 #include "../inc/ModelDataBase.h"
 #include "../inc/Model.h"
 #include "../models/RGE_MSSM.h"
+#include <memory>
 
-std::shared_ptr<SUSYModel> ModelDataBase::LoadMSSM() {
+std::unique_ptr<SUSYModel> ModelDataBase::LoadMSSM() {
 	// Define Symmetries of the MSSM 
-	std::vector<Symmetry*> sym ; 
+	std::vector<std::shared_ptr<Symmetry>> sym ; 
 	Symmetry_SU su3(3) ; 
-	sym.push_back(&su3) ;
+	sym.push_back(std::make_shared<Symmetry_SU>(su3)) ;
 	Symmetry_SU su2(2) ;
-	sym.push_back(&su2) ; 
-	Symmetry_U u1(1) ;
-	sym.push_back(&u1) ;
+	sym.push_back(std::make_shared<Symmetry_SU>(su2)) ; 
+	Symmetry_U u1(1) ; 
+	sym.push_back(std::make_shared<Symmetry_U>(u1)) ;
 	Symmetries SM(sym) ;  
 
 	// Define gauge couplings 
@@ -24,6 +25,7 @@ std::shared_ptr<SUSYModel> ModelDataBase::LoadMSSM() {
 	double g3_EW {1} ; 
 	GaugeCoupling g3(su3,RGE_g3,g3_EW) ; 
 	gauge_coupling.push_back(&g3) ; 
+
 
 	// Define Vector superfields
 	// problem with definition of the color charge... -> change to rep ? 
@@ -52,6 +54,7 @@ std::shared_ptr<SUSYModel> ModelDataBase::LoadMSSM() {
 	ChiralSF E("Right handed lepton", {3,2,2},SM) ;  
 	chiral_SF.push_back(&E) ; 
 
+
 	// Define SF couplings
 	// Need to add specific conditions for potential minimisation
 	std::vector<SFCoupling*> couplings ; 
@@ -62,12 +65,15 @@ std::shared_ptr<SUSYModel> ModelDataBase::LoadMSSM() {
 	std::vector<SFCoupling*>* couplings_ptr = &couplings ; 
 
 	std::cout << "In DataBase : " << couplings[0]->GetValue_EW() << " " << couplings[0] << std::endl ; 
+
+
 	// Definition of the model
 //	SUSYModel MSSM("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ; 
 //	SUSYModel* MSSM = new SUSYModel("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ;
-	std::shared_ptr<SUSYModel> MSSM = std::make_shared<SUSYModel>("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings);
+	std::unique_ptr<SUSYModel> MSSM = std::make_unique<SUSYModel>("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings);
 	auto all_sfcpl = MSSM->GetSFCoupling() ; 
 	std::cout << "In DataBase : " << (*all_sfcpl)[0]->GetValue_EW()  << std::endl ; 
 	std::cout << "In DataBase ptr : " << (*all_sfcpl)[0]  << std::endl ; 
+
 	return MSSM ; 
 	} ; 

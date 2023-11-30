@@ -8,7 +8,7 @@ class ModelDataBase {
 		ModelDataBase() {} ; 
 		~ModelDataBase() {} ; 
 //		SUSYModel* LoadMSSM() ; 
-		std::shared_ptr<SUSYModel> LoadMSSM() ; 
+		std::unique_ptr<SUSYModel> LoadMSSM() ; 
 } ; 
 
 #endif

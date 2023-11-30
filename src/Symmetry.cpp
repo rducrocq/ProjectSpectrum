@@ -4,6 +4,7 @@
 #include "typeinfo"
 #include <iostream>
 #include <algorithm>
+#include <memory>
 
 Symmetry::Symmetry(unsigned int n): n_(n) {} ; 
 
@@ -32,7 +33,7 @@ bool operator!=(const Symmetry_SU& a, const Symmetry_SU& b) {return !(a.IsEqual(
 bool operator!=(const Symmetry_U& a, const Symmetry_U& b) {return !(a.IsEqual(b)) ;} ;
 
 bool Symmetries::AreEqual(const Symmetries& s) const {
-	std::vector<Symmetry*> sym = s.GetSymmetries() ; 
+	std::vector<std::shared_ptr<Symmetry>> sym = s.GetSymmetries() ; 
 	return std::equal(sym.begin(), sym.end(), symmetries_.begin(), symmetries_.end()) ; 
 	} ; 
 

@@ -14,7 +14,8 @@ std::cout << "BEGINNING OF PROGRAM" << std::endl ;
 
 ModelDataBase mdb ;
 
-std::shared_ptr<SUSYModel> MSSM = mdb.LoadMSSM() ; 
+std::unique_ptr<SUSYModel> MSSM = mdb.LoadMSSM() ; 
+
 
 // Test of SFCoupling
 std::vector<SFCoupling*>* SFcpl = MSSM->GetSFCoupling() ; 
