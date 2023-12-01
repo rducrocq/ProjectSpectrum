@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 class Symmetry {
 	protected: 
@@ -12,7 +13,7 @@ class Symmetry {
 		// Constructor
 		Symmetry(){} ; 
 		Symmetry(unsigned int n) ; 
-
+		Symmetry(Symmetry& sym) ; 
 		// Destructor
 		virtual ~Symmetry(){} ; 
 
@@ -31,7 +32,7 @@ class Symmetry_SU : public Symmetry {
 		// Constructor
 		Symmetry_SU(): Symmetry() {} ; 
 		Symmetry_SU(unsigned int n) ; 
-
+		Symmetry_SU(Symmetry_SU& sym) ; 
 		// Destructor
 		~Symmetry_SU(){} ; 
 
@@ -44,6 +45,7 @@ class Symmetry_U : public Symmetry {
 		// Constructor
 		Symmetry_U(): Symmetry() {} ; 
 		Symmetry_U(unsigned int n) ; 
+		Symmetry_U(Symmetry_U& sym) ; 
 
 		// Destructor
 		~Symmetry_U(){} ; 
@@ -55,13 +57,13 @@ class Symmetry_U : public Symmetry {
 
 class Symmetries {
 	private:
-		std::vector<Symmetry*> symmetries_ ;
+		std::vector<std::shared_ptr<Symmetry>> symmetries_ ;
 	public:
 		Symmetries() {}; 
-		Symmetries(std::vector<Symmetry*> symmetries) : symmetries_(symmetries) {};
+		Symmetries(std::vector<std::shared_ptr<Symmetry>> symmetries) : symmetries_(symmetries) {};
 		~Symmetries() {} ;
-		void SetSymmetries(std::vector<Symmetry*> symmetries) {symmetries_ = symmetries ;} ; 
-		std::vector<Symmetry*> GetSymmetries() const {return symmetries_ ;} ;  
+		void SetSymmetries(std::vector<std::shared_ptr<Symmetry>> symmetries) {symmetries_ = symmetries ;} ; 
+		std::vector<std::shared_ptr<Symmetry>> GetSymmetries() const {return symmetries_ ;} ;  
 		unsigned int GetSizeSymmetries() const {return symmetries_.size() ;} ; 
 		bool AreEqual(const Symmetries& sym) const ; 
 } ; 

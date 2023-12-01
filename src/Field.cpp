@@ -41,6 +41,13 @@ Scalar::Scalar(const Scalar& phi) : Scalar() {
 	sym_ = phi.sym_ ; 
 	}
 
+Scalar::Scalar(std::shared_ptr<Scalar>& phi) : Scalar() {
+	name_ = phi->name_ ;
+	charge_ = phi->charge_ ; 
+	vev_ = phi->vev_ ; 
+	sym_ = phi->sym_ ; 
+}
+
 Spinor::Spinor(std::string name, std::vector<double> charge, Symmetries sym): Field::Field(name,charge,sym){}; 
 
 Spinor::Spinor(std::string name, std::vector<double> charge, Symmetries sym, double vev):  Field::Field(name,charge,sym,vev){}; 
@@ -52,6 +59,13 @@ Spinor::Spinor(const Spinor& psi) : Spinor() {
 	sym_ = psi.sym_ ; 
 	}
 
+Spinor::Spinor(std::shared_ptr<Spinor>& psi) : Spinor() {
+	name_ = psi->name_ ;
+	charge_ = psi->charge_ ; 
+	vev_ = psi->vev_ ; 
+	sym_ = psi->sym_ ; 
+}
+
 Vector::Vector(std::string name, std::vector<double> charge, Symmetries sym): Field::Field(name,charge,sym){}; 
 
 Vector::Vector(std::string name, std::vector<double> charge, Symmetries sym, double vev):  Field::Field(name,charge,sym,vev){}; 
@@ -62,3 +76,10 @@ Vector::Vector(const Vector& Amu) : Vector() {
 	vev_ = Amu.vev_ ; 
 	sym_ = Amu.sym_ ; 
 	}
+
+Vector::Vector(std::shared_ptr<Vector>& Amu) : Vector() {
+	name_ = Amu->name_ ;
+	charge_ = Amu->charge_ ; 
+	vev_ = Amu->vev_ ; 
+	sym_ = Amu->sym_ ; 
+}

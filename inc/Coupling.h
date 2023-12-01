@@ -7,6 +7,7 @@
 #include "../inc/Symmetry.h"
 #include "../inc/Field.h"
 #include "../inc/Superfield.h"
+#include <memory>
 
 typedef std::function<double(std::vector<double>)> RGE ; 
 
@@ -44,44 +45,45 @@ class Coupling {
 
 class GaugeCoupling: public Coupling {
 	private: 
-		Symmetry* sym_ ; 
+		std::shared_ptr<Symmetry> sym_ ; 
 	public: 
 		GaugeCoupling() : Coupling() {} ;
-		GaugeCoupling(Symmetry& sym, RGE rge, double value_EW) ; 
-		GaugeCoupling(Symmetry& sym, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
+		GaugeCoupling(std::shared_ptr<Symmetry>& sym, RGE rge, double value_EW) ; 
+		GaugeCoupling(std::shared_ptr<Symmetry>& sym, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
 		GaugeCoupling(const GaugeCoupling& g_cpl) ;
 		virtual ~GaugeCoupling() {} ;
 
-		Symmetry* GetSymmetry() const {return sym_;} ; 
-		void SetSymmetry(Symmetry* sym) {sym_ = sym;} ; 
+		std::shared_ptr<Symmetry> GetSymmetry() const {return sym_;} ; 
+		void SetSymmetry(std::shared_ptr<Symmetry> sym) {sym_ = sym;} ; 
 } ;
 
 class FieldCoupling: public Coupling {
 	private:
-		std::vector<Field*>* fields_ ; 
+		std::shared_ptr<std::vector<std::shared_ptr<Field>>> fields_ ; 
 	public:
 		FieldCoupling() {} ; 
-		FieldCoupling(std::vector<Field*>& fields, RGE rge, double value_EW) ; 
-		FieldCoupling(std::vector<Field*>& fields, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
+		FieldCoupling(std::shared_ptr<std::vector<std::shared_ptr<Field>>>& fields, RGE rge, double value_EW) ; 
+		FieldCoupling(std::shared_ptr<std::vector<std::shared_ptr<Field>>>& fields, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
 		FieldCoupling(const FieldCoupling& f_cpl) ; 
 		virtual ~FieldCoupling() {} ;
 
-		std::vector<Field*>* GetFields() const {return fields_;} ; 
-		void SetFields(std::vector<Field*>& fields) {fields_ = &fields;} ; 
+		std::shared_ptr<std::vector<std::shared_ptr<Field>>> GetFields() const {return fields_;} ; 
+		void SetFields(std::vector<std::shared_ptr<Field>>& fields) {fields_ = std::make_shared<std::vector<std::shared_ptr<Field>>>(fields);} ; 
 } ; 
 
 class SFCoupling: public Coupling {
 	private:
-		std::vector<Superfield*>* superfields_ ; 
+		std::shared_ptr<std::vector<std::shared_ptr<Superfield>>> superfields_ ; 
 	public:
 		SFCoupling() {} ; 
-		SFCoupling(std::vector<Superfield*>& superfields, RGE rge, double value_EW) ; 
-		SFCoupling(std::vector<Superfield*>& superfields, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
+		SFCoupling(std::shared_ptr<std::vector<std::shared_ptr<Superfield>>>& superfields, RGE rge, double value_EW) ; 
+		SFCoupling(std::shared_ptr<std::vector<std::shared_ptr<Superfield>>>& superfields, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
 		SFCoupling(const SFCoupling& sf_cpl) ; 
+		SFCoupling(std::shared_ptr<SFCoupling>& sf_cpl) ;
 		virtual ~SFCoupling() {} ;
 
-		std::vector<Superfield*>* GetSuperFields() const {return superfields_;} ; 
-		void SetSuperFields(std::vector<Superfield*>& superfields) {superfields_ = &superfields;} ; 
+		std::shared_ptr<std::vector<std::shared_ptr<Superfield>>> GetSuperFields() const {return superfields_;} ; 
+		void SetSuperFields(std::vector<std::shared_ptr<Superfield>>& superfields) {superfields_ = std::make_shared<std::vector<std::shared_ptr<Superfield>>>(superfields);} ; 
 } ; 
 
 #endif
