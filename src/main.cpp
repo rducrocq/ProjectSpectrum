@@ -15,14 +15,14 @@ int main(){
 
 std::cout << "BEGINNING OF PROGRAM" << std::endl ;
 
-/*
+
 std::cout << "test" << std::endl ;
 
 ModelDataBase mdb ;
 
 auto MSSM = mdb.LoadMSSM() ; 
 
-
+/*
 // Test of SFCoupling
 auto SFcpl = MSSM->GetSFCoupling() ; 
 
@@ -45,8 +45,9 @@ auto F = MSSM->GetFields() ;
 auto SF = MSSM->GetSuperFields() ; 
 
 // Test of SolveRGE()
-std::cout << MSSM->SolveRGE() << std::endl ; 
+
 */
+std::cout << MSSM->SolveRGE(0.01, 0.1) << std::endl ; 
 
 std::cout << "END OF PROGRAM" << std::endl ;
 

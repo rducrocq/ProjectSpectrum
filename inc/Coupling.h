@@ -4,12 +4,13 @@
 #include <string>
 #include <iostream>
 #include <functional>
+#include <map>
 #include "../inc/Symmetry.h"
 #include "../inc/Field.h"
 #include "../inc/Superfield.h"
 #include <memory>
 
-typedef std::function<double(std::vector<double>)> RGE ; 
+typedef std::function<double(std::map<std::string, double>)> RGE ; 
 
 class Coupling {
 	protected:
@@ -18,16 +19,19 @@ class Coupling {
 		double value_GUT_  ; 
 		double value_SUSY_  ;  
 		double current_value_ = value_EW_ ;
+		std::string name_ ; 
 	public:
 		Coupling(){} ; 
-		Coupling(RGE rge, double value_EW): rge_(rge)
+		Coupling(RGE rge, double value_EW, std::string name): rge_(rge)
 							, value_EW_(value_EW)
 							, value_GUT_(0)
-							, value_SUSY_(0) {std::cout << "In Coupling EW : " << value_SUSY_ << std::endl ; } ; 
-		Coupling(RGE rge, double value_EW, double value_GUT, double value_SUSY): rge_(rge)
+							, value_SUSY_(0)
+							, name_(name) {std::cout << "In Coupling EW : " << value_SUSY_ << std::endl ; } ; 
+		Coupling(RGE rge, double value_EW, double value_GUT, double value_SUSY, std::string name): rge_(rge)
 							, value_EW_(value_EW)
 							, value_GUT_(value_GUT)
-							, value_SUSY_(value_SUSY) {} ; 
+							, value_SUSY_(value_SUSY)
+							, name_(name) {} ; 
 		Coupling(const Coupling& cpl) ; 
 		virtual ~Coupling(){} ; 
 
@@ -42,7 +46,7 @@ class Coupling {
 		double GetValue_SUSY() const {return value_SUSY_;} ; 
 		double GetValue_GUT() const {return value_GUT_;} ; 
 		double GetCurrentValue() const {return current_value_;} ; 
-
+		std::string Getname() const {return name_;} ;
 		
 } ; 
 
@@ -51,8 +55,8 @@ class GaugeCoupling: public Coupling {
 		std::shared_ptr<Symmetry> sym_ ; 
 	public: 
 		GaugeCoupling() : Coupling() {} ;
-		GaugeCoupling(std::shared_ptr<Symmetry>& sym, RGE rge, double value_EW) ; 
-		GaugeCoupling(std::shared_ptr<Symmetry>& sym, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
+		GaugeCoupling(std::shared_ptr<Symmetry>& sym, RGE rge, double value_EW, std::string name) ; 
+		GaugeCoupling(std::shared_ptr<Symmetry>& sym, RGE rge, double value_EW, double value_SUSY, double value_GUT, std::string name) ; 
 		GaugeCoupling(const GaugeCoupling& g_cpl) ;
 		virtual ~GaugeCoupling() {} ;
 
@@ -65,8 +69,8 @@ class FieldCoupling: public Coupling {
 		std::shared_ptr<std::vector<std::shared_ptr<Field>>> fields_ ; 
 	public:
 		FieldCoupling() {} ; 
-		FieldCoupling(std::shared_ptr<std::vector<std::shared_ptr<Field>>>& fields, RGE rge, double value_EW) ; 
-		FieldCoupling(std::shared_ptr<std::vector<std::shared_ptr<Field>>>& fields, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
+		FieldCoupling(std::shared_ptr<std::vector<std::shared_ptr<Field>>>& fields, RGE rge, double value_EW, std::string name) ; 
+		FieldCoupling(std::shared_ptr<std::vector<std::shared_ptr<Field>>>& fields, RGE rge, double value_EW, double value_SUSY, double value_GUT, std::string name) ; 
 		FieldCoupling(const FieldCoupling& f_cpl) ; 
 		virtual ~FieldCoupling() {} ;
 
@@ -79,8 +83,8 @@ class SFCoupling: public Coupling {
 		std::shared_ptr<std::vector<std::shared_ptr<Superfield>>> superfields_ ; 
 	public:
 		SFCoupling() {} ; 
-		SFCoupling(std::shared_ptr<std::vector<std::shared_ptr<Superfield>>>& superfields, RGE rge, double value_EW) ; 
-		SFCoupling(std::shared_ptr<std::vector<std::shared_ptr<Superfield>>>& superfields, RGE rge, double value_EW, double value_SUSY, double value_GUT) ; 
+		SFCoupling(std::shared_ptr<std::vector<std::shared_ptr<Superfield>>>& superfields, RGE rge, double value_EW, std::string name) ; 
+		SFCoupling(std::shared_ptr<std::vector<std::shared_ptr<Superfield>>>& superfields, RGE rge, double value_EW, double value_SUSY, double value_GUT, std::string name) ; 
 		SFCoupling(const SFCoupling& sf_cpl) ; 
 		SFCoupling(std::shared_ptr<SFCoupling>& sf_cpl) ;
 		virtual ~SFCoupling() {} ;

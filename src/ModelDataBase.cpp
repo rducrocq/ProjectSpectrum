@@ -2,6 +2,8 @@
 #include "../inc/Model.h"
 #include "../models/RGE_MSSM.h"
 #include <memory>
+#include <map>
+#include <string>
 
 std::unique_ptr<SUSYModel> ModelDataBase::LoadMSSM() {
 	// Define Symmetries of the MSSM 
@@ -18,14 +20,14 @@ std::unique_ptr<SUSYModel> ModelDataBase::LoadMSSM() {
 
 	// Define gauge couplings 
 	std::vector<std::shared_ptr<GaugeCoupling>> gauge_coupling ;
-	double g1_EW {1} ; 
-	GaugeCoupling g1(u1,RGE_g1,g1_EW) ; 
+	double g1_EW = 1 ; 
+	GaugeCoupling g1(u1,RGE_g1,g1_EW, "g1") ; 
 	gauge_coupling.push_back(std::make_shared<GaugeCoupling>(g1)) ; 
-	double g2_EW {1} ; 
-	GaugeCoupling g2(su2,RGE_g2,g2_EW) ; 
+	double g2_EW = 1 ; 
+	GaugeCoupling g2(su2,RGE_g2,g2_EW, "g2") ; 
 	gauge_coupling.push_back(std::make_shared<GaugeCoupling>(g2)) ; 
-	double g3_EW {1} ; 
-	GaugeCoupling g3(su3,RGE_g3,g3_EW) ; 
+	double g3_EW = 1 ; 
+	GaugeCoupling g3(su3,RGE_g3,g3_EW, "g3") ; 
 	gauge_coupling.push_back(std::make_shared<GaugeCoupling>(g3)) ; 
 
 
@@ -60,10 +62,10 @@ std::unique_ptr<SUSYModel> ModelDataBase::LoadMSSM() {
 	// Define SF couplings
 	// Need to add specific conditions for potential minimisation
 	std::vector<std::shared_ptr<SFCoupling>> couplings ; 
-	double Mu_EW {32.23} ; 
+	double Mu_EW =32.23 ; 
 	std::vector<std::shared_ptr<Superfield>> sf_Mu {std::make_shared<ChiralSF>(HU),std::make_shared<ChiralSF>(HD)} ; 
 	auto ptr_sf_Mu = std::make_shared<std::vector<std::shared_ptr<Superfield>>>(sf_Mu) ; 
-	SFCoupling Mu(ptr_sf_Mu, RGE_mu, Mu_EW) ; 
+	SFCoupling Mu(ptr_sf_Mu, RGE_mu, Mu_EW, "mu") ; 
 	couplings.push_back(std::make_shared<SFCoupling>(Mu)) ; 
 	auto couplings_ptr = std::make_shared<std::vector<std::shared_ptr<SFCoupling>>>(couplings) ; 
 
@@ -75,8 +77,8 @@ std::unique_ptr<SUSYModel> ModelDataBase::LoadMSSM() {
 //	SUSYModel* MSSM = new SUSYModel("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings) ;
 	std::unique_ptr<SUSYModel> MSSM = std::make_unique<SUSYModel>("MSSM",SM,gauge_coupling, chiral_SF, vector_SF, couplings);
 	auto all_sfcpl = MSSM->GetSFCoupling() ; 
-	std::cout << "In DataBase : " << (*all_sfcpl)[0]->GetValue_EW()  << std::endl ; 
-	std::cout << "In DataBase ptr : " << (*all_sfcpl)[0]  << std::endl ; 
+	std::cout << "In DataBase : " << all_sfcpl[0]->GetValue_EW()  << std::endl ; 
+	std::cout << "In DataBase ptr : " << all_sfcpl[0]  << std::endl ; 
 
 	return MSSM ; 
 	} ; 
