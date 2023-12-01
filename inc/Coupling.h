@@ -17,6 +17,7 @@ class Coupling {
 		double value_EW_  ; 
 		double value_GUT_  ; 
 		double value_SUSY_  ;  
+		double current_value_ = value_EW_ ;
 	public:
 		Coupling(){} ; 
 		Coupling(RGE rge, double value_EW): rge_(rge)
@@ -34,11 +35,13 @@ class Coupling {
 		void SetValue_EW(double value_EW) {value_EW_ = value_EW; } ;
 		void SetValue_SUSY(double value_SUSY) {value_SUSY_ = value_SUSY; } ;
 		void SetValue_GUT(double value_GUT) {value_GUT_ = value_GUT; } ;
+		void SetCurrentValue(double value) {current_value_ = value; } ;
 
 		RGE GetRGE() const {return rge_;} ; 
 		double GetValue_EW() const {return value_EW_;} ; 
 		double GetValue_SUSY() const {return value_SUSY_;} ; 
 		double GetValue_GUT() const {return value_GUT_;} ; 
+		double GetCurrentValue() const {return current_value_;} ; 
 
 		
 } ; 
