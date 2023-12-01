@@ -2,6 +2,7 @@
 #define Superfield_h
 
 #include "Field.h"
+#include <memory>
 
 class Superfield {
 	protected:
@@ -23,35 +24,35 @@ class Superfield {
 
 class ChiralSF: public Superfield {
 	private:
-		Scalar* phi_ ; 
-		Spinor* psi_ ; 
+		std::shared_ptr<Scalar> phi_ ; 
+		std::shared_ptr<Spinor> psi_ ; 
 	public:
 		ChiralSF() ; 
-		ChiralSF(std::string name, Scalar* phi, Spinor* psi) ; 
+		ChiralSF(std::string name, std::shared_ptr<Scalar> phi, std::shared_ptr<Spinor> psi) ; 
 		ChiralSF(std::string name, std::vector<double> charge, Symmetries sym) ; 
 		~ChiralSF() ; 
 
 		bool IsChiral() const {return true;} ; 
 		std::vector<double> Getcharge() const {return phi_->Getcharge() ;} ;
 		Symmetries GetSymmetry() const {return phi_->GetSymmetry() ;} ;
-		Scalar* GetScalar() const {return phi_;} ; 
-		Spinor* GetSpinor() const {return psi_;} ; 
+		std::shared_ptr<Scalar> GetScalar() const {return phi_;} ; 
+		std::shared_ptr<Spinor> GetSpinor() const {return psi_;} ; 
 } ;
 
 class VectorSF: public Superfield {
 	private:
-		Vector* vmu_ ; 
-		Spinor* psi_ ; 
+		std::shared_ptr<Vector> vmu_ ; 
+		std::shared_ptr<Spinor> psi_ ; 
 	public:
 		VectorSF() ; 
-		VectorSF(std::string name, Vector* vmu, Spinor* psi) ; 
+		VectorSF(std::string name, std::shared_ptr<Vector> vmu, std::shared_ptr<Spinor> psi) ; 
 		VectorSF(std::string name, std::vector<double> charge, Symmetries sym) ; 
 		~VectorSF() ; 
 
 		bool IsChiral() const {return false;} ; 
 		std::vector<double> Getcharge() const {return vmu_->Getcharge() ;} ;
 		Symmetries GetSymmetry() const {return vmu_->GetSymmetry() ;} ;
-		Vector* GetVector() const {return vmu_;} ; 	
-		Spinor* GetSpinor() const {return psi_;} ; 	
+		std::shared_ptr<Vector> GetVector() const {return vmu_;} ; 	
+		std::shared_ptr<Spinor> GetSpinor() const {return psi_;} ; 	
 } ; 
 #endif

@@ -13,7 +13,7 @@ class Symmetry {
 		// Constructor
 		Symmetry(){} ; 
 		Symmetry(unsigned int n) ; 
-
+		Symmetry(Symmetry& sym) ; 
 		// Destructor
 		virtual ~Symmetry(){} ; 
 
@@ -32,7 +32,7 @@ class Symmetry_SU : public Symmetry {
 		// Constructor
 		Symmetry_SU(): Symmetry() {} ; 
 		Symmetry_SU(unsigned int n) ; 
-
+		Symmetry_SU(Symmetry_SU& sym) ; 
 		// Destructor
 		~Symmetry_SU(){} ; 
 
@@ -45,6 +45,7 @@ class Symmetry_U : public Symmetry {
 		// Constructor
 		Symmetry_U(): Symmetry() {} ; 
 		Symmetry_U(unsigned int n) ; 
+		Symmetry_U(Symmetry_U& sym) ; 
 
 		// Destructor
 		~Symmetry_U(){} ; 

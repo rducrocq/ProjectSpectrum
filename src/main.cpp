@@ -2,8 +2,11 @@
 #include "../inc/Field.h"
 #include "../inc/Superfield.h"
 #include "../inc/Coupling.h"*/
+
+
 #include "../inc/Model.h"
 #include "../inc/ModelDataBase.h"
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -12,13 +15,16 @@ int main(){
 
 std::cout << "BEGINNING OF PROGRAM" << std::endl ;
 
+/*
+std::cout << "test" << std::endl ;
+
 ModelDataBase mdb ;
 
-std::unique_ptr<SUSYModel> MSSM = mdb.LoadMSSM() ; 
+auto MSSM = mdb.LoadMSSM() ; 
 
 
 // Test of SFCoupling
-std::vector<SFCoupling*>* SFcpl = MSSM->GetSFCoupling() ; 
+auto SFcpl = MSSM->GetSFCoupling() ; 
 
 std::cout << "In Main ptr : " << (*SFcpl)[0] << std::endl ; 
 
@@ -30,16 +36,17 @@ for (auto sfcpl : (*SFcpl)) {
 	}
 
 // Test of Coupling
-std::vector<Coupling*>* cpl = MSSM->GetCoupling() ; 
+auto cpl = MSSM->GetCoupling() ; 
 
 // Test of Field
-std::vector<Field*>* F = MSSM->GetFields() ; 
+auto F = MSSM->GetFields() ; 
 
 // Test of Superfield
-std::vector<Superfield*>* SF = MSSM->GetSuperFields() ; 
+auto SF = MSSM->GetSuperFields() ; 
 
 // Test of SolveRGE()
 std::cout << MSSM->SolveRGE() << std::endl ; 
+*/
 
 std::cout << "END OF PROGRAM" << std::endl ;
 
