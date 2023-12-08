@@ -19,7 +19,7 @@
                 "-o",
 
                 "generator",       // le nom du fichier de sortie
-                "-std=c++17"
+                "-std=c++20"
             ],
             "group": {
                 "kind": "build",

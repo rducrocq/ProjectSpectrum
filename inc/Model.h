@@ -11,80 +11,55 @@
 class Model {
 	protected:
 		std::string name_ ; 
-		Symmetries sym_ ; 
-		std::vector<std::shared_ptr<GaugeCoupling>> g_cpl_ ; 
-		std::vector<std::shared_ptr<Coupling>> cpl_ ; 
+		const Symmetries& sym_ ; 
+		std::vector<std::unique_ptr<Coupling>> cpl_ ; 
 		std::map<std::string, double> par ;
 	public: 
-		Model() {} ; 
-		Model(std::string name, Symmetries& sym, std::vector<std::shared_ptr<GaugeCoupling>>& g_cpl) ; 
-		virtual ~Model() {
-//			delete cpl_ ; cpl_ = 0 ;
-			} ;
+		Model(std::string name, const Symmetries& sym, std::vector<std::unique_ptr<Coupling>>& cpl) ; 
+		virtual ~Model() {} ;
  
-		std::vector<std::shared_ptr<GaugeCoupling>> GetGaugeCoupling() const {return g_cpl_;} ; 
+		const std::vector<std::unique_ptr<Coupling>>& GetCoupling() const {return cpl_;} ; 
 
-//		virtual void SetCoupling(std::vector<Coupling*>& cpl) = 0 ; 
-		virtual std::vector<std::shared_ptr<Coupling>> GetCoupling() const = 0 ; 
-		virtual std::vector<std::shared_ptr<Field>> GetFields() const = 0 ; 		
-		virtual bool SolveRGE(double h, double t_end) = 0 ; 		
+		
+		virtual bool SolveRGE(const double& h, const double& t_end) = 0 ; 		
 } ; 
 
 class SUSYModel: public Model {
 	private:
-		std::vector<std::shared_ptr<ChiralSF>> Phis_ ; 
-		std::vector<std::shared_ptr<VectorSF>> Vs_ ; 
-		std::vector<std::shared_ptr<SFCoupling>> SFcpl_ ; 
-		std::vector<std::shared_ptr<Superfield>> SF_ ; 
-		std::vector<std::shared_ptr<Field>> F_ ; 
+		const std::vector<std::shared_ptr<Superfield>>& Phis_ ; 
+		const std::vector<std::shared_ptr<Superfield>>& Vs_ ; 
  
 	public:
-		SUSYModel() : Model() {} ; 
-		SUSYModel(std::string name_, Symmetries& sym	, std::vector<std::shared_ptr<GaugeCoupling>>& g_cpl
-								, std::vector<std::shared_ptr<ChiralSF>>& Phis
-								, std::vector<std::shared_ptr<VectorSF>>& Vs
-								, std::vector<std::shared_ptr<SFCoupling>>& SFcpl) ; 
-		~SUSYModel() {
-/*			for (auto sfcpl : *SFcpl_){
-				delete sfcpl ; sfcpl = 0 ; 
-			}
-			delete SFcpl_ ; SFcpl_ = 0 ; 
-			delete SF_ ; SF_ = 0 ; 
-			delete F_; F_ = 0 ; 
-			*/
-			} ; 
+		SUSYModel(std::string name_, const Symmetries& sym	
+								, const std::vector<std::shared_ptr<Superfield>>& Phis
+								, const std::vector<std::shared_ptr<Superfield>>& Vs 
+								, std::vector<std::unique_ptr<Coupling>>& cpl) ; 
 
-		void SetSFCoupling(std::vector<std::shared_ptr<SFCoupling>>& SFcpl) {SFcpl_ = SFcpl; } ; 
-		std::vector<std::shared_ptr<SFCoupling>> GetSFCoupling() const {return SFcpl_;} ; 
-		virtual std::vector<std::shared_ptr<Coupling>> GetCoupling() const {return cpl_;} ; 
-		virtual std::vector<std::shared_ptr<Field>> GetFields() const ; 		
-		virtual std::vector<std::shared_ptr<Superfield>> GetSuperFields() const ; 		
-		virtual bool SolveRGE(double h, double t_end) ; 		
+		~SUSYModel() {} ; 
+	
+		const std::vector<std::shared_ptr<Superfield>>& GetChiral() const {return Phis_;}; 		
+		const std::vector<std::shared_ptr<Superfield>>& GetVector() const {return Vs_;}; 
+		virtual bool SolveRGE(const double& h, const double& t_end) ; 		
 } ; 
 
 class ClassicModel: public Model {
 	private:
-		std::vector<std::shared_ptr<Scalar>> phis_ ; 
-		std::vector<std::shared_ptr<Spinor>> psis_ ;
- 		std::vector<std::shared_ptr<Vector>> Amus_ ;
-		std::vector<std::shared_ptr<FieldCoupling>> Fcpl_ ; 
-		std::vector<std::shared_ptr<Field>> F_ ; 
+		const std::vector<std::shared_ptr<Scalar>>& phis_ ; 
+		const std::vector<std::shared_ptr<Spinor>>& psis_ ;
+ 		const std::vector<std::shared_ptr<Vector>>& Amus_ ;
 	public:
-		ClassicModel() : Model() {} ; 
-		ClassicModel(std::string name_, Symmetries& sym	, std::vector<std::shared_ptr<GaugeCoupling>>& g_cpl
-								, std::vector<std::shared_ptr<Scalar>>& phis
-								, std::vector<std::shared_ptr<Spinor>>& psis
-								, std::vector<std::shared_ptr<Vector>>& Amus
-								, std::vector<std::shared_ptr<FieldCoupling>>& Fcpl) ; 
-		~ClassicModel() {
-			//delete F_ ; F_ = 0 ;
-			} ; 
+		ClassicModel(std::string name_, const Symmetries& sym	
+								, const std::vector<std::shared_ptr<Scalar>>& phis
+								, const std::vector<std::shared_ptr<Spinor>>& psis
+								, const std::vector<std::shared_ptr<Vector>>& Amus
+								, std::vector<std::unique_ptr<Coupling>>& cpl) ; 
 
-		void SetFieldCoupling(std::vector<std::shared_ptr<FieldCoupling>>& Fcpl) {Fcpl_ = Fcpl; } ; 
-		std::vector<std::shared_ptr<FieldCoupling>> GetFieldCoupling() const {return Fcpl_;} ; 
-		virtual std::vector<std::shared_ptr<Coupling>> GetCoupling() const {return cpl_;} ; 
-		virtual std::vector<std::shared_ptr<Field>> GetFields() const ; 		
-		virtual bool SolveRGE(double h, double t_end) ; 		
+		~ClassicModel() {} ; 
+	
+		const std::vector<std::shared_ptr<Scalar>>& GetScalar() const {return phis_;}; 		
+		const std::vector<std::shared_ptr<Spinor>>& GetSpinor() const {return psis_;}; 		
+		const std::vector<std::shared_ptr<Vector>>& GetVector() const {return Amus_;}; 		
+		virtual bool SolveRGE(const double& h, const double& t_end) ; 		
 } ; 
 
 #endif

@@ -10,24 +10,23 @@
 #include "../inc/Superfield.h"
 #include <memory>
 
-typedef std::function<double(std::map<std::string, double>)> RGE ; 
+typedef std::function<double(std::map<std::string, double>&)> RGE ; 
 
 class Coupling {
 	protected:
-		RGE rge_ ;
-		double value_EW_  ; 
-		double value_GUT_  ; 
-		double value_SUSY_  ;  
+		const RGE& rge_ ;
+		double value_EW_ = 0 ; 
+		double value_GUT_ = 0 ; 
+		double value_SUSY_ = 0  ;  
 		double current_value_ = value_EW_ ;
 		std::string name_ ; 
 	public:
-		Coupling(){} ; 
-		Coupling(RGE rge, double value_EW, std::string name): rge_(rge)
+		Coupling(const RGE& rge, double value_EW, std::string name): rge_(rge)
 							, value_EW_(value_EW)
 							, value_GUT_(0)
 							, value_SUSY_(0)
-							, name_(name) {std::cout << "In Coupling EW : " << value_SUSY_ << std::endl ; } ; 
-		Coupling(RGE rge, double value_EW, double value_GUT, double value_SUSY, std::string name): rge_(rge)
+							, name_(name) {} ; 
+		Coupling(const RGE& rge, double value_EW, double value_GUT, double value_SUSY, std::string name): rge_(rge)
 							, value_EW_(value_EW)
 							, value_GUT_(value_GUT)
 							, value_SUSY_(value_SUSY)
@@ -35,10 +34,6 @@ class Coupling {
 		Coupling(const Coupling& cpl) ; 
 		virtual ~Coupling(){} ; 
 
-		void SetRGE(RGE rge) {rge_ = rge; } ;
-		void SetValue_EW(double value_EW) {value_EW_ = value_EW; } ;
-		void SetValue_SUSY(double value_SUSY) {value_SUSY_ = value_SUSY; } ;
-		void SetValue_GUT(double value_GUT) {value_GUT_ = value_GUT; } ;
 		void SetCurrentValue(double value) {current_value_ = value; } ;
 
 		RGE GetRGE() const {return rge_;} ; 
@@ -52,45 +47,59 @@ class Coupling {
 
 class GaugeCoupling: public Coupling {
 	private: 
-		std::shared_ptr<Symmetry> sym_ ; 
+		const Symmetry& sym_ ; 
 	public: 
-		GaugeCoupling() : Coupling() {} ;
-		GaugeCoupling(std::shared_ptr<Symmetry>& sym, RGE rge, double value_EW, std::string name) ; 
-		GaugeCoupling(std::shared_ptr<Symmetry>& sym, RGE rge, double value_EW, double value_SUSY, double value_GUT, std::string name) ; 
-		GaugeCoupling(const GaugeCoupling& g_cpl) ;
+		GaugeCoupling(const Symmetry& sym, const RGE& rge, double value_EW, std::string name) ; 
+		GaugeCoupling(const Symmetry& sym, const RGE& rge, double value_EW, double value_SUSY, double value_GUT, std::string name) ; 
 		virtual ~GaugeCoupling() {} ;
 
-		std::shared_ptr<Symmetry> GetSymmetry() const {return sym_;} ; 
-		void SetSymmetry(std::shared_ptr<Symmetry> sym) {sym_ = sym;} ; 
+		const Symmetry& GetSymmetry() const {return sym_;} ; 
 } ;
+
 
 class FieldCoupling: public Coupling {
 	private:
-		std::shared_ptr<std::vector<std::shared_ptr<Field>>> fields_ ; 
+		std::vector<std::shared_ptr<Field>> fields_ ; 
 	public:
-		FieldCoupling() {} ; 
-		FieldCoupling(std::shared_ptr<std::vector<std::shared_ptr<Field>>>& fields, RGE rge, double value_EW, std::string name) ; 
-		FieldCoupling(std::shared_ptr<std::vector<std::shared_ptr<Field>>>& fields, RGE rge, double value_EW, double value_SUSY, double value_GUT, std::string name) ; 
-		FieldCoupling(const FieldCoupling& f_cpl) ; 
+		FieldCoupling(std::vector<std::shared_ptr<Field>> fields, const RGE& rge, double value_EW, std::string name) ; 
+		FieldCoupling(std::vector<std::shared_ptr<Field>> fields, const RGE& rge, double value_EW, double value_SUSY, double value_GUT, std::string name) ; 
+		FieldCoupling(FieldCoupling& f_cpl) ; 
+    	// Move constructor
+   		FieldCoupling(FieldCoupling&& other) noexcept : Coupling(std::move(other)), fields_(std::move(other.fields_)) {} ; 
+
 		virtual ~FieldCoupling() {} ;
 
-		std::shared_ptr<std::vector<std::shared_ptr<Field>>> GetFields() const {return fields_;} ; 
-		void SetFields(std::vector<std::shared_ptr<Field>>& fields) {fields_ = std::make_shared<std::vector<std::shared_ptr<Field>>>(fields);} ; 
+		const std::vector<std::shared_ptr<Field>>& GetFields() const {return fields_;} ; 
 } ; 
 
 class SFCoupling: public Coupling {
 	private:
-		std::shared_ptr<std::vector<std::shared_ptr<Superfield>>> superfields_ ; 
+		std::vector<std::shared_ptr<Superfield>> superfields_ ; 
 	public:
-		SFCoupling() {} ; 
-		SFCoupling(std::shared_ptr<std::vector<std::shared_ptr<Superfield>>>& superfields, RGE rge, double value_EW, std::string name) ; 
-		SFCoupling(std::shared_ptr<std::vector<std::shared_ptr<Superfield>>>& superfields, RGE rge, double value_EW, double value_SUSY, double value_GUT, std::string name) ; 
-		SFCoupling(const SFCoupling& sf_cpl) ; 
-		SFCoupling(std::shared_ptr<SFCoupling>& sf_cpl) ;
+		SFCoupling(std::vector<std::shared_ptr<Superfield>> superfields, const RGE& rge, double value_EW, std::string name) ; 
+		SFCoupling(std::vector<std::shared_ptr<Superfield>> superfields, const RGE& rge, double value_EW, double value_SUSY, double value_GUT, std::string name) ; 
+		SFCoupling(SFCoupling& sf_cpl) ; 
+    	// Move constructor
+   		SFCoupling(SFCoupling&& other) noexcept : Coupling(std::move(other)), superfields_(std::move(other.superfields_)) {} ; 
+
 		virtual ~SFCoupling() {} ;
 
-		std::shared_ptr<std::vector<std::shared_ptr<Superfield>>> GetSuperFields() const {return superfields_;} ; 
-		void SetSuperFields(std::vector<std::shared_ptr<Superfield>>& superfields) {superfields_ = std::make_shared<std::vector<std::shared_ptr<Superfield>>>(superfields);} ; 
+		const std::vector<std::shared_ptr<Superfield>>& GetSuperFields() const {return superfields_;} ; 
+} ; 
+
+class SoftCoupling: public Coupling {
+	private:
+		std::vector<std::shared_ptr<Superfield>> superfields_ ; 
+	public:
+		SoftCoupling(std::vector<std::shared_ptr<Superfield>> superfields, const RGE& rge, double value_EW, std::string name) ; 
+		SoftCoupling(std::vector<std::shared_ptr<Superfield>> superfields, const RGE& rge, double value_EW, double value_SUSY, double value_GUT, std::string name) ; 
+		SoftCoupling(SoftCoupling& sf_cpl) ; 
+    	// Move constructor
+   		SoftCoupling(SoftCoupling&& other) noexcept : Coupling(std::move(other)), superfields_(std::move(other.superfields_)) {} ; 
+
+		virtual ~SoftCoupling() {} ;
+
+		const std::vector<std::shared_ptr<Superfield>>& GetSuperFields() const {return superfields_;} ; 
 } ; 
 
 #endif
