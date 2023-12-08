@@ -7,7 +7,7 @@ class ModelDataBase {
 	public:
 		ModelDataBase() {} ; 
 		~ModelDataBase() {} ; 
-//		SUSYModel* LoadMSSM() ; 
+ 
 		std::unique_ptr<SUSYModel> LoadMSSM() ; 
 } ; 
 

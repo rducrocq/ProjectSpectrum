@@ -7,6 +7,7 @@
             "command": "g++",  // ou le compilateur C++ de votre choix
             "args": [
                 "-g",          // ajoute des informations de débogage
+                "-Wall",
                 "src/main.cpp",    // votre fichier principal
                 "src/Coupling.cpp",   // vos autres fichiers source
                 "src/Field.cpp",
@@ -16,8 +17,9 @@
                 "src/ModelDataBase.cpp",
                 "models/RGE_MSSM.cpp",
                 "-o",
+
                 "generator",       // le nom du fichier de sortie
-                "-std=c++14"
+                "-std=c++20"
             ],
             "group": {
                 "kind": "build",

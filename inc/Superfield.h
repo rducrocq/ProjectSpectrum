@@ -8,7 +8,6 @@ class Superfield {
 	protected:
 		std::string name_ ;
 	public: 
-		Superfield(){} ; 
 		Superfield(std::string name): name_(name) {}; 
 		virtual ~Superfield(){} ; 
 
@@ -18,41 +17,39 @@ class Superfield {
 
 		virtual bool IsChiral() const = 0 ; 
 		virtual std::vector<double> Getcharge() const = 0 ;
-		virtual Symmetries GetSymmetry() const = 0 ;
+		virtual const Symmetries& GetSymmetry() const = 0 ;
 } ; 
 
 
 class ChiralSF: public Superfield {
 	private:
-		std::shared_ptr<Scalar> phi_ ; 
-		std::shared_ptr<Spinor> psi_ ; 
+		std::unique_ptr<Scalar> phi_ ; 
+		std::unique_ptr<Spinor> psi_ ; 
 	public:
-		ChiralSF() ; 
-		ChiralSF(std::string name, std::shared_ptr<Scalar> phi, std::shared_ptr<Spinor> psi) ; 
-		ChiralSF(std::string name, std::vector<double> charge, Symmetries sym) ; 
+		ChiralSF(std::string name, std::unique_ptr<Scalar> phi, std::unique_ptr<Spinor> psi) ; 
+		ChiralSF(std::string name, std::vector<double> charge, const Symmetries& sym) ; 
 		~ChiralSF() ; 
 
 		bool IsChiral() const {return true;} ; 
 		std::vector<double> Getcharge() const {return phi_->Getcharge() ;} ;
-		Symmetries GetSymmetry() const {return phi_->GetSymmetry() ;} ;
-		std::shared_ptr<Scalar> GetScalar() const {return phi_;} ; 
-		std::shared_ptr<Spinor> GetSpinor() const {return psi_;} ; 
+		const Symmetries& GetSymmetry() const {return phi_->GetSymmetry() ;} ;
+		const Scalar& GetScalar() const {return *phi_;} ; 
+		const Spinor& GetSpinor() const {return *psi_;} ; 
 } ;
 
 class VectorSF: public Superfield {
 	private:
-		std::shared_ptr<Vector> vmu_ ; 
-		std::shared_ptr<Spinor> psi_ ; 
+		std::unique_ptr<Vector> vmu_ ; 
+		std::unique_ptr<Spinor> psi_ ; 
 	public:
-		VectorSF() ; 
-		VectorSF(std::string name, std::shared_ptr<Vector> vmu, std::shared_ptr<Spinor> psi) ; 
-		VectorSF(std::string name, std::vector<double> charge, Symmetries sym) ; 
+		VectorSF(std::string name, std::unique_ptr<Vector> vmu, std::unique_ptr<Spinor> psi) ; 
+		VectorSF(std::string name, std::vector<double> charge, const Symmetries& sym) ; 
 		~VectorSF() ; 
 
 		bool IsChiral() const {return false;} ; 
 		std::vector<double> Getcharge() const {return vmu_->Getcharge() ;} ;
-		Symmetries GetSymmetry() const {return vmu_->GetSymmetry() ;} ;
-		std::shared_ptr<Vector> GetVector() const {return vmu_;} ; 	
-		std::shared_ptr<Spinor> GetSpinor() const {return psi_;} ; 	
+		const Symmetries& GetSymmetry() const {return vmu_->GetSymmetry() ;} ;
+		const Vector& GetVector() const {return *vmu_;} ; 	
+		const Spinor& GetSpinor() const {return *psi_;} ; 	
 } ; 
 #endif
